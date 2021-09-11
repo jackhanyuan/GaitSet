@@ -1,3 +1,9 @@
+import torch
+import torch.nn as nn
+import numpy as np
+from .basic_blocks import BasicConv2d, SetBlock, HPM
+
+
 class SetNet(nn.Module):
     def __init__(self, hidden_dim):
         super(SetNet, self).__init__()
@@ -5,7 +11,7 @@ class SetNet(nn.Module):
         self.batch_frame = None
         
         _in_channels = 1
-        _channels = [64,128,256]
+        _channels = [64, 128, 256]
         self.set_layer1 = SetBlock(BasicConv2d(_in_channels, _channels[0], 5, padding=2))
         self.set_layer2 = SetBlock(BasicConv2d(_channels[0], _channels[0], 3, padding=1), True)
         self.set_layer3 = SetBlock(BasicConv2d(_channels[0], _channels[1], 3, padding=1))

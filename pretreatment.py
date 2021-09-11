@@ -3,7 +3,6 @@
 # @Time    : 2018/12/19
 
 import os
-from scipy import misc as scisc
 import cv2
 import numpy as np
 from warnings import warn
@@ -27,7 +26,7 @@ def boolean_string(s):
 
 parser = argparse.ArgumentParser(description='Test')
 parser.add_argument('--input_path', default='', type=str,
-                    help='Root path of raw dataset.')
+                    help='Root path of raw data.')
 parser.add_argument('--output_path', default='', type=str,
                     help='Root path for output.')
 parser.add_argument('--log_file', default='./pretreatment.log', type=str,
@@ -43,6 +42,8 @@ opt = parser.parse_args()
 
 INPUT_PATH = opt.input_path
 OUTPUT_PATH = opt.output_path
+INPUT_PATH = r"work/dataset/silhouttes"
+OUTPUT_PATH = r"work/dataset/cut_img"
 IF_LOG = opt.log
 LOG_PATH = opt.log_file
 WORKERS = opt.worker_num
@@ -132,7 +133,7 @@ def cut_pickle(seq_info, pid):
         if img is not None:
             # Save the cut img
             save_path = os.path.join(out_dir, _frame_name)
-            scisc.imsave(save_path, img)
+            cv2.imwrite(save_path, img)
             count_frame += 1
     # Warn if the sequence contains less than 5 frames
     if count_frame < 5:
@@ -169,7 +170,7 @@ for _id in id_list:
         for _view in view:
             seq_info = [_id, _seq_type, _view]
             out_dir = os.path.join(OUTPUT_PATH, *seq_info)
-            os.makedirs(out_dir)
+            os.makedirs(out_dir, exist_ok=True)
             results.append(
                 pool.apply_async(
                     cut_pickle,

@@ -51,7 +51,7 @@ class SetNet(nn.Module):
             _tmp = [
                 torch.max(x[:, self.batch_frame[i]:self.batch_frame[i + 1], :, :, :], 1)
                 for i in range(len(self.batch_frame) - 1)
-                ]
+            ]
             max_list = torch.cat([_tmp[i][0] for i in range(len(_tmp))], 0)
             arg_max_list = torch.cat([_tmp[i][1] for i in range(len(_tmp))], 0)
             return max_list, arg_max_list
@@ -63,7 +63,7 @@ class SetNet(nn.Module):
             _tmp = [
                 torch.median(x[:, self.batch_frame[i]:self.batch_frame[i + 1], :, :, :], 1)
                 for i in range(len(self.batch_frame) - 1)
-                ]
+            ]
             median_list = torch.cat([_tmp[i][0] for i in range(len(_tmp))], 0)
             arg_median_list = torch.cat([_tmp[i][1] for i in range(len(_tmp))], 0)
             return median_list, arg_median_list

@@ -39,9 +39,15 @@ def load_data(dataset_path, resolution, dataset, pid_num, pid_shuffle, cache=Tru
         os.makedirs('partition', exist_ok=True)
         np.save(pid_fname, pid_list)
 
-    pid_list = np.load(pid_fname)
+    pid_list = np.load(pid_fname, allow_pickle=True)
     train_list = pid_list[0]
     test_list = pid_list[1]
+
+    print('-' * 80)
+    print('train_list', train_list)
+    print('test_list', test_list)
+    print('-' * 80)
+
     train_source = DataSet(
         [seq_dir[i] for i, l in enumerate(label) if l in train_list],
         [label[i] for i, l in enumerate(label) if l in train_list],
