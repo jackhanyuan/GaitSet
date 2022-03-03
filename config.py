@@ -20,7 +20,7 @@ conf = {
         'restore_iter': 0,
         'total_iter': 80000,
         'margin': 0.2,  # 损失函数的margin
-        'num_workers': 3,  # 线程数
+        'num_workers': 3,  # 线程数，在windows中请设为0，否则会报错
         'frame_num': 30,  # 每个批次的帧数
         'model_name': 'GaitSet',
     },
